@@ -38,7 +38,8 @@ const handleSummaryClick = async (entry) => {
 
   // ⛔ Sinon on génère une seule fois
   try {
-    const res = await apiRequest(`http://localhost:5000/api/journal/${entry._id}/generate-summary`, "POST");
+    const res = await apiRequest(`${import.meta.env.VITE_BACKEND_URL}/api/journal/${entry._id}/generate-summary`, "POST");
+
     if (res.success && res.summary) {
       const updatedEntry = { ...entry, summary: res.summary };
 
@@ -73,7 +74,7 @@ const handleSummaryClick = async (entry) => {
   useEffect(() => {
     const fetchEntries = async () => {
       try {
-        const data = await apiRequest("http://localhost:5000/api/journal", "GET");
+        const data = await apiRequest(`${import.meta.env.VITE_BACKEND_URL}/api/journal`, "GET");
         console.log("📥 Données reçues du backend :", data);
         setEntries(data);
       } catch (err) {
@@ -96,7 +97,7 @@ const handleSummaryClick = async (entry) => {
   const handleAddEntry = async () => {
     if (!formData.title || !formData.content) return;
     try {
-      const newEntry = await apiRequest("http://localhost:5000/api/journal", "POST", formData);
+      const newEntry = await apiRequest(`${import.meta.env.VITE_BACKEND_URL}/api/journal`, "POST", formData);
       setEntries((prev) => [newEntry, ...prev]);
       setFormData({ title: "", content: "" });
     } catch (err) {
@@ -106,7 +107,7 @@ const handleSummaryClick = async (entry) => {
 
   const handleDelete = async (id) => {
     try {
-      await apiRequest(`http://localhost:5000/api/journal/${id}`, "DELETE");
+      await apiRequest(`${import.meta.env.VITE_BACKEND_URL}/api/journal/${id}`, "DELETE");
       setEntries((prev) => prev.filter((e) => e._id !== id));
     } catch (err) {
       console.error("Erreur suppression:", err.message);
@@ -124,7 +125,7 @@ const handleSummaryClick = async (entry) => {
 
   const handleSaveEdit = async () => {
     try {
-      const updated = await apiRequest(`http://localhost:5000/api/journal/${editingEntry._id}`, "PUT", editData);
+      const updated = await apiRequest(`${import.meta.env.VITE_BACKEND_URL}/api/journal/${editingEntry._id}`, "PUT", editData);
       // 🧹 Supprime le résumé localement si l'entrée a été modifiée
       updated.summary = "";
       setEntries((prev) => prev.map((e) => (e._id === updated._id ? updated : e)));
