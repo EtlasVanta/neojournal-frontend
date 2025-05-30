@@ -1,7 +1,8 @@
 // /src/services/api.js
 
-const API_BASE =
-    import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const BACKEND_URL =
+    import.meta.env.VITE_BACKEND_URL;
+
 
 export const request = async(url, method = 'GET', data = null, token = null) => {
     const options = {
