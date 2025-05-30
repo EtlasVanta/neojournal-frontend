@@ -16,7 +16,6 @@ export default function Dashboard() {
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [entries, setEntries] = useState([]);
-  const data = await apiRequest("/api/journal");
 
   // ✅ Fonction réutilisable pour charger les entrées
   const fetchEntries = async () => {
@@ -27,14 +26,7 @@ export default function Dashboard() {
     }
 
     try {
-      const res = await fetch("/api/journal", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
+      const data = await apiRequest("/api/journal", "GET", null, token);
       console.log("✅ Données récupérées :", data);
       setEntries(data);
     } catch (err) {
@@ -172,17 +164,15 @@ export default function Dashboard() {
       {panelOpen && (
         <EntryPanel
           onClose={() => setPanelOpen(false)}
-          onEntriesUpdated={fetchEntries} // ✅ PROPRE, DURABLE
+          onEntriesUpdated={fetchEntries}
         />
       )}
-
       {summaryOpen && (
         <IASummaryPanel
           entries={entries}
           onClose={() => setSummaryOpen(false)}
         />
       )}
-
       {statsOpen && <StatsPanel onClose={() => setStatsOpen(false)} />}
       {dreamOpen && <DreamPanel onClose={() => setDreamOpen(false)} />}
       {dialogueOpen && <DialoguesPanel onClose={() => setDialogueOpen(false)} />}
