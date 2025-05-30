@@ -16,7 +16,9 @@ export async function apiRequest(path, method = "GET", body = null, token = null
         headers.Authorization = `Bearer ${token}`;
     }
 
-    const res = await fetch(`${BACKEND_URL}${path}`, {
+    const fullUrl = `${BACKEND_URL.replace(/\/$/, "")}${path.startsWith("/") ? path : "/" + path}`;
+
+    const res = await fetch(fullUrl, {
         method,
         headers,
         body: body ? JSON.stringify(body) : null,
