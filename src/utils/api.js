@@ -4,6 +4,8 @@
 export const BACKEND_URL =
     import.meta.env.VITE_BACKEND_URL;
 
+console.log("🌍 BACKEND_URL =", BACKEND_URL); // 👈 ajoute cette ligne
+
 // Fonction générique pour appeler ton API
 export async function apiRequest(path, method = "GET", body = null, token = null) {
     const headers = { "Content-Type": "application/json" };
