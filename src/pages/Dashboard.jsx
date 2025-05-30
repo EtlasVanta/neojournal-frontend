@@ -27,7 +27,7 @@ export default function Dashboard() {
 
     try {
       const data = await apiRequest("/api/journal", "GET", null, token);
-      console.log("✅ Données récupérées :", data);
+      console.log("📘 Entrées chargées dans Dashboard :", data);
       setEntries(data);
     } catch (err) {
       console.error("Erreur lors de la récupération des entrées :", err);
