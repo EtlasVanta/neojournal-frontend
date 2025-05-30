@@ -1,5 +1,8 @@
 // /src/services/journalService.js
 import { request } from './api';
+import { apiRequest } from "../utils/api";
+
+const data = await apiRequest("/api/journal");
 
 export const getJournalEntries = (token) =>
     request('/api/journal', 'GET', null, token);

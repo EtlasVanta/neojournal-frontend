@@ -6,6 +6,7 @@ import IASummaryPanel from "../components/IASummaryPanel";
 import StatsPanel from "../components/StatsPanel";
 import DreamPanel from "../components/DreamPanel";
 import DialoguesPanel from "../components/DialoguesPanel";
+import { apiRequest } from "../utils/api";
 
 export default function Dashboard() {
   const [panelOpen, setPanelOpen] = useState(false);
@@ -15,6 +16,7 @@ export default function Dashboard() {
   const [dialogueOpen, setDialogueOpen] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [entries, setEntries] = useState([]);
+  const data = await apiRequest("/api/journal");
 
   // ✅ Fonction réutilisable pour charger les entrées
   const fetchEntries = async () => {
